@@ -1,5 +1,6 @@
 const express = require("express");
 const { conexion } = require("./helpers/dbConect");
+const { searchBooking } = require("./scraping");
 //configure server
 const app = express();
 const port = process.env.PORT || 3000;
