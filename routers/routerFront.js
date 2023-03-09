@@ -6,6 +6,7 @@ const {
   getProductos,
   getQuienesSomos,
   getContacto,
+  getInstallations,
 } = require("../controllers/frontControllers");
 
 //import routes
@@ -13,6 +14,8 @@ const {
 router.get("/", getIndex);
 
 router.get("/servicios", getServicios);
+
+router.get("/installations", getInstallations);
 
 router.get("/productos", getProductos);
 

@@ -12,8 +12,10 @@ app.set("view engine", "ejs");
 
 //establish where views folders will be
 app.set("views", __dirname + "/views");
+
 //conect
 conexion();
+
 ///import routers
 app.use("/", require("./routers/routerFront"));
 

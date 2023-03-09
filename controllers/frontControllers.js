@@ -1,23 +1,11 @@
 const Servicio = require("../models/servicioModel");
+const Installation = require("../models/installationsModel");
 const getIndex = (req, res) => {
   res.render("index", {
     titulo: "Home Page",
     texto: "Introduccion al sitio",
   });
 };
-
-// const getServicios = (req, res) => {
-//   console.log(Servicio);
-//   Servicio.find((error, servicios) => {
-//     if (error) {
-//       return res.json({ ok: false, msg: "error" });
-//     } else {
-//       console.log(servicios);
-//     }
-//   });
-
-//   res.render("servicios");
-// };
 
 const getServicios = async (req, res) => {
   try {
@@ -26,6 +14,19 @@ const getServicios = async (req, res) => {
     res.render("servicios", {
       titulo: "Este es el servicio",
       servicios,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getInstallations = async (req, res) => {
+  try {
+    const installations = await Installation.find();
+    console.log(installations);
+    res.render("installations", {
+      titulo: "Estos son nuestros installations",
+      installations,
     });
   } catch (error) {
     console.log(error);
@@ -59,4 +60,5 @@ module.exports = {
   getProductos,
   getQuienesSomos,
   getContacto,
+  getInstallations,
 };

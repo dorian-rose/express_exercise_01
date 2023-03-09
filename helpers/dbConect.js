@@ -7,6 +7,7 @@ const conexion = async () => {
   const uri = `mongodb+srv://${user}:${pass}@cluster0.dpyy6cg.mongodb.net/${dbname}?retryWrites=true&w=majority`;
   try {
     const respuesta = await mongoose.connect(uri);
+
     console.log("conectado");
     return respuesta;
   } catch (error) {
