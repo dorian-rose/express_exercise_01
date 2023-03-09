@@ -1,6 +1,6 @@
-<%- include("./templates/header"); -%>
+<%- include("./templates/header"); -%> <%- include("./templates/nav"); -%>
 <h1>Servicios</h1>
-<% services.forEach(element => { %>
-<h3><%= element.serviceTitle %></h3>
-<p><%= element.serviceDesc %></p>
+<% servicios.forEach(element => { %>
+<h3><%= element.servicio %></h3>
+<p><%= element.descripcion %></p>
 <% }) %> <%- include("./templates/footer"); -%>
