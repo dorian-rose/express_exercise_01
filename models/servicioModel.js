@@ -1,11 +1,10 @@
 const { Schema, model } = require("mongoose");
 const ServicioSchema = new Schema({
   servicio: String,
-  descripcion: {
-    type: String,
-    required: true,
-    trim: true,
-  },
+  descripcion: String, //{
+  //   type: String,
+  //   required: true,
+  // },
   fecha: { type: Date, default: Date.now() },
 });
 
