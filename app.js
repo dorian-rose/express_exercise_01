@@ -16,6 +16,11 @@ const { conexion } = require("./helpers/dbConect");
 //* cors model to access env
 const cors = require("cors");
 app.use(cors());
+
+//parser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 //set ejs folders virtually in public
 app.use(express.static(__dirname + "/public"));
 
@@ -28,10 +33,6 @@ app.set("views", __dirname + "/views");
 app.use("/", require("./routers/routerFront"));
 
 app.use("/api", require("./routers/routerApi"));
-
-//parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   res.status(404).render("404", {

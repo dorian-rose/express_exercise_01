@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.2",
     "chromium": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
