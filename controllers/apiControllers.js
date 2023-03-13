@@ -10,28 +10,32 @@ const getServicios = async (req, res) => {
       data: servicios,
     });
   } catch (error) {
-    return res.status(404).json({
+    return res.status(500).json({
       ok: false,
       msg: "Error getting services",
     });
   }
 };
 
-//for testing: an id is: 640c923ce52ce1cb08d709ed
-
 //function to get one service using ID
 const getServicio = async (req, res) => {
   try {
     const id = req.params.id;
     const servicio = await Servicio.findById(id);
-
-    return res.status(200).json({
-      ok: true,
-      msg: "Getting one service",
-      data: servicio,
-    });
+    if (servicio) {
+      return res.status(200).json({
+        ok: true,
+        msg: "Getting one service",
+        data: servicio,
+      });
+    } else {
+      return res.status(404).json({
+        ok: false,
+        msg: "Service with this ID doesn't exist",
+      });
+    }
   } catch (error) {
-    return res.status(404).json({
+    return res.status(500).json({
       ok: false,
       msg: "Error getting the service",
     });
@@ -40,9 +44,8 @@ const getServicio = async (req, res) => {
 
 //function to create new service
 const createServicio = async (req, res) => {
+  const NewServicio = new Servicio(req.body);
   try {
-    const NewServicio = new Servicio(req.body);
-    console.log(NewServicio);
     const newServicioData = await NewServicio.save();
     return res.status(201).json({
       ok: true,
@@ -51,7 +54,6 @@ const createServicio = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      //204??
       ok: false,
       msg: "Error creating the service",
     });
@@ -61,40 +63,39 @@ const createServicio = async (req, res) => {
 //function to update a service
 const updateServicio = async (req, res) => {
   try {
-    console.log(req.body);
     const newBody = req.body;
     const id = req.params.id;
-    //const updatedServicio = await Servicio.findByIdAndUpdate(id, newBody);
     const updatedServicio = await Servicio.findOneAndUpdate(
       { _id: id },
       { $set: newBody },
-      { new: true }
+      { new: true } // to show the new data
     );
+    // if (updateServicio) {
     return res.status(201).json({
-      //200 o 201??
       ok: true,
       msg: "Updating one service",
       data: updatedServicio,
     });
+    //} else {
+    // return res.status(404).json({
+    //   ok: false,
+    //   msg: "Service with this ID doesn't exist",
+    // });
+    // }
   } catch (error) {
     return res.status(500).json({
       ok: false,
       msg: "Error updating the service",
     });
   }
-  //   } else
-  //     return res.status(404).json({
-  //       ok: false,
-  //       msg: "Error finding this service",
-  //     });
 };
 
 //function to delete service
 const deleteServicio = async (req, res) => {
   const id = req.params.id;
   try {
-    servicios = await Servicio.findOneAndDelete(id);
-    //const servicios = await Servicio.find();
+    await Servicio.findOneAndDelete(id);
+    //find by id - if exists, remove, if doesn't exist, error
     return res.status(200).json({
       ok: true,
       msg: "deleting this service",

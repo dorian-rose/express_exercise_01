@@ -34,6 +34,8 @@ app.use("/", require("./routers/routerFront"));
 
 app.use("/api", require("./routers/routerApi"));
 
+app.use("/api", require("./routers/routerApiUser"));
+
 app.use((req, res, next) => {
   res.status(404).render("404", {
     titulo: "404",
@@ -46,5 +48,5 @@ conexion();
 
 //port listening
 app.listen(port, () => {
-  console.log("Server escuchando", port);
+  console.log(`Server listening to ${port}`);
 });
