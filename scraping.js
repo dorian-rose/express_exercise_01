@@ -1,58 +1,57 @@
 const puppeteer = require("puppeteer");
 
-async function searchBooking() {
+(async () => {
   // Open chromium browser:
-  const browser = await puppeteer.launch({
-    ignoreDefaultArgs: ["--disable-extensions"],
-  });
+  const browser = await puppeteer.launch(); //{ headless: false }
 
   // Open a new tab:
   const page = await browser.newPage();
 
-  //Go to bookinh page:
-  await page.goto("https://www.booking.com");
+  //Go to page:
+  await page.goto("https://muebleslufe.com/");
 
+  //await page.waitForTimeout(4000);
   // cookies??
-  await page.click("#sp-cc-accept");
+  //await page.click("#onetrust-accept-btn-handler")
 
+  //search button
+  await page.click("#search_widget");
   //find input, type .
-  await page.type("#:Ra9:", "noosa");
+  await page.type(".ui-autocomplete-input", "espejo ");
 
   //click submt button
-  await page.click(
-    ".fc63351294 a822bdf511 d4b6b7a9e7 cfb238afa1 c938084447 f4605622ad aa11d0d5cd"
-  );
+  //await page.press(".c-header__quick-search-input").press("Enter");
+  await page.keyboard.press("Enter");
 
   //page loads
   await page.waitForNavigation();
 
   //get images, store in array
-  const urlImg = await page.$$eval("img.b8b0793b0e", (urlImg) =>
+  const urlImg = await page.$$eval("img", (urlImg) =>
     urlImg.map((img) => img.src)
   );
 
   //names of accom in array
-  const names = await page.$$eval(".fcab3ed991 a23c043802", (titles) =>
-    titles.map((title) => title.innerHTML)
+  const names = await page.$$eval("h2 a", (titles) =>
+    titles.map((title) => title.textContent)
   );
 
   //Get prices
-  //   const prices = await page.$$eval(".xxxxx, (prices) =>
-  //     prices.map((price) => price.innerHTML)
-  //   );
+  const prices = await page.$$eval(".price", (prices) =>
+    prices.map((price) => price.innerHTML)
+  );
 
-  const arrayAccom = [];
+  const furnitureArray = [];
   for (let i = 0; i < names.length; i++) {
-    const accomData = {
+    const furnitureData = {
       name: names[i],
       img: urlImg[i],
-      //price: prices[i],
+      price: prices[i],
     };
-    arrayAccom.push(accomData);
+    furnitureArray.push(furnitureData);
   }
-  console.log(arrayAccom);
+  console.log(furnitureArray);
 
   //Se cierra el navegador.
   await browser.close();
-}
-searchBooking();
+})();

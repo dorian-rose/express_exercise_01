@@ -12,7 +12,9 @@ const port = process.env.PORT || 3000;
 //connect with mongodb
 const { conexion } = require("./helpers/dbConect");
 
-//const { searchBooking } = require("./scraping");
+//import scraping and call function
+const { searchBooking } = require("./scraping");
+
 //* cors model to access env
 const cors = require("cors");
 app.use(cors());
